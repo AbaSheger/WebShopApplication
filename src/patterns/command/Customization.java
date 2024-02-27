@@ -1,5 +1,5 @@
 package patterns.command;
 
-public class Customization {
-
+public interface Customization {
+       void apply();
 }
