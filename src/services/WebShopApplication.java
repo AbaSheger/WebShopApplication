@@ -1,10 +1,11 @@
 package services;
 import models.CEO;
 import models.*;
+import java.util.UUID;
 import patterns.builder.PantsBuilder;
 import patterns.builder.SkirtBuilder;
 import patterns.builder.TShirtBuilder;
-
+import patterns.command.*;
 import java.util.Scanner;
 
 public class WebShopApplication {
@@ -48,7 +49,8 @@ public class WebShopApplication {
         NotificationService notificationService = new NotificationService();
 
         // Initialize CEO and register as an observer to NotificationService
-        CEO ceo = new CEO();
+        CEO ceo = new CEO("Wigells VD"); // Optionally set the name
+
         notificationService.registerObserver(ceo);
 
         // Initialize OrderService with NotificationService
@@ -99,6 +101,12 @@ public class WebShopApplication {
                         .setFit(fit)
                         .setLength(length)
                         .build();
+                // Generate a unique order ID
+                String orderId = UUID.randomUUID().toString();
+
+                OrderDetail orderDetail = new OrderDetail(itemType, color,orderId, size, "PENDING");
+                orderService.placeOrder(orderDetail);
+
                 System.out.println("Custom Pants ordered: " + customPants);
                 break;
             case "TShirt":
@@ -114,7 +122,8 @@ public class WebShopApplication {
                         .setSleeves(sleeves)
                         .setNeckType(neckType)
                         .build();
-                System.out.println("Custom TShirt ordered: " + customTShirt);
+                //System.out.println("Custom TShirt ordered: " + customTShirt);
+
                 break;
             case "Skirt":
 
@@ -136,6 +145,9 @@ public class WebShopApplication {
 
         // Place the order (Assuming a generalized method for now)
         // orderService.placeOrder(); // You might need to adjust this part based on your actual implementation
-        System.out.println(itemType + " ordered with color " + color + " and size " + size + ". Notification sent to CEO.");
+       // System.out.println(itemType + " ordered with color " + color + " and size " + size + ". Notification sent to CEO.");
+
+
+        notificationService.notifyOrderReady();
     }
 }

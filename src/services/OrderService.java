@@ -29,6 +29,7 @@ public class OrderService {
         // Simplified order placement logic
         orders.put(orderDetail.getOrderId(), orderDetail);
         notificationService.notifyNewOrderPlaced(); // Notify observers when a new order is placed
+        System.out.println("Order placed for: " + orderDetail.getItemType());
     }
 
     public void completeOrder(String orderId) {

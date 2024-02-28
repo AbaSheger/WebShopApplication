@@ -1,20 +1,25 @@
 package services;
 
+
+
 public class OrderDetail {
 
     private String itemType;
     private String color;
     private String size;
-    private String  OrderId;
+    private String  OrderId ;
     private String  Status;
 
 
 
     // Constructor
-    public OrderDetail(String itemType, String color, String size) {
+
+    public OrderDetail(String itemType, String color, String size, String OrderId, String Status) {
         this.itemType = itemType;
         this.color = color;
         this.size = size;
+        this.OrderId = OrderId;
+        this.Status = Status;
     }
 
     // Getters and Setters
