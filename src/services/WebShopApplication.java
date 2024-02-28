@@ -12,6 +12,8 @@ public class WebShopApplication {
     private static Scanner scanner = new Scanner(System.in);
     private static OrderService orderService;
 
+    private static Clothing clothing;
+
     public static void main(String[] args) {
         initializeServices();
         displayWelcomeMessage();
@@ -86,7 +88,6 @@ public class WebShopApplication {
         System.out.print("Enter size(Medium/Large) : ");
         String size = scanner.nextLine();
 
-        // Use the appropriate builder based on the item type
         switch (itemType) {
             case "Pants":
                 System.out.println("Enter fit preference (Slim/Regular/Tapered): ");
@@ -101,6 +102,10 @@ public class WebShopApplication {
                         .setFit(fit)
                         .setLength(length)
                         .build();
+
+               clothing = customPants;
+
+
                 // Generate a unique order ID
                 String orderId = UUID.randomUUID().toString();
 
