@@ -5,7 +5,10 @@ public class OrderDetail {
     private String itemType;
     private String color;
     private String size;
-    // Add more fields as necessary
+    private String  OrderId;
+    private String  Status;
+
+
 
     // Constructor
     public OrderDetail(String itemType, String color, String size) {
@@ -24,7 +27,18 @@ public class OrderDetail {
     public String getSize() { return size; }
     public void setSize(String size) { this.size = size; }
 
-    // Add more getters and setters as necessary
+    public String getOrderId() { return OrderId; }
+
+
+    public void setOrderId(String OrderId) { this.OrderId = OrderId; }
+
+    public String getStatus() { return Status; }
+
+    public void setStatus(String Status) { this.Status = Status; }
+
+
+
+
 }
 
 
