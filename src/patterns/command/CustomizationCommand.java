@@ -1,16 +1,7 @@
 package patterns.command;
 
-public class CustomizationCommand implements Command {
+public interface CustomizationCommand {
 
-    private Customization customization;
+    void execute();
 
-
-    public CustomizationCommand(Customization customization) {
-        this.customization = customization;
-    }
-
-    @Override
-    public void execute() {
-     customization.apply();
-    }
 }

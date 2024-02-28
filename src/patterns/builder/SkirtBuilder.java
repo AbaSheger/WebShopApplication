@@ -37,4 +37,11 @@ public class SkirtBuilder{
     public Skirt build() {
         return skirts;
     }
+
+    @Override
+    public String toString() {
+        return "SkirtBuilder{" +
+                "skirts=" + skirts +
+                '}';
+    }
 }

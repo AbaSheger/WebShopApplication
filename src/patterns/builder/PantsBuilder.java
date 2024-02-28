@@ -40,4 +40,11 @@ public class PantsBuilder {
 
         return pants;
     }
+
+    @Override
+    public String toString() {
+        return "PantsBuilder{" +
+                "pants=" + pants +
+                '}';
+    }
 }

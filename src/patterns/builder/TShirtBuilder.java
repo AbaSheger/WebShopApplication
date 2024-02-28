@@ -38,4 +38,11 @@ public class TShirtBuilder {
     public TShirt build() {
         return tshirt;
     }
+
+    @Override
+    public String toString() {
+        return "TShirtBuilder{" +
+                "tshirt=" + tshirt +
+                '}';
+    }
 }

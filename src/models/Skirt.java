@@ -5,7 +5,7 @@ public class Skirt {
     private String id;
     private  String name;
     private String size ;
-    private double price;
+    private  double price;
     private String material;
     private String color;
     private String waistline ;
