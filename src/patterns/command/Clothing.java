@@ -1,5 +1,8 @@
 package patterns.command;
 
+import models.Pants;
+import models.Skirt;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +14,7 @@ public class Clothing {
     private String color;
     private List<String> adjustments = new ArrayList<>();
     private String length;
+
 
     // Constructor
     public Clothing(String type) {

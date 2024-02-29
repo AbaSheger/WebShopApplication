@@ -1,5 +1,5 @@
 package models;
-
+import patterns.command.*;
 public class Pants {
 
     private String id;
@@ -11,8 +11,12 @@ public class Pants {
     private String fit ;
     private String length;
 
+    private Clothing clothinginfo;
 
     public Pants() {
+
+        this.clothing= new Clothing("Pants");
+
     }
 
     public String getId() {
