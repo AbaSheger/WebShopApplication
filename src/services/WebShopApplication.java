@@ -104,12 +104,11 @@ public class WebShopApplication {
                         .setLength(length)
                         .build();
 
-                //inform the ceo that new order is placed using the command pattern
+                //inform the ceo that new order is placed using notifyNewOrderPlaced method of the notification service
 
+                // use the command pattern to decorate or adjust the order as per the order  and show that with a print out
 
-                // use the command pattern to decorate or adjust the order as perer the wish of the customer and show that with a print out
-
-                // when the customization is done and order is ready using the notSifyOrderReady method of the notification service
+                // when the customization is done and order is ready using notifyOrderReady  method of the notification service
 
                 // then print out a receipt of the order with the details of the order and the customer details
 
@@ -145,12 +144,11 @@ public class WebShopApplication {
                         .setNeckType(neckType)
                         .build();
 
-                //inform the ceo that new order is placed using the command pattern
+                //inform the ceo that new order is placed using notifyNewOrderPlaced method of the notification service
 
+                // use the command pattern to decorate or adjust the order as per the order and show that with a print out
 
-                // use the command pattern to decorate or adjust the order as perer the wish of the customer and show that with a print out
-
-                // when the customization is done and order is ready using the notSifyOrderReady method of the notification service
+                // when the customization is done and order is ready using notifyOrderReady  method of the notification service
 
                 // then print out a receipt of the order with the details of the order and the customer details
 
@@ -175,12 +173,11 @@ public class WebShopApplication {
                 System.out.println("Custom Skirt ordered: " + customSkirt);
                 break;
 
-            //inform the ceo that new order is placed using the command pattern
+            //inform the ceo that new order is placed using notifyNewOrderPlaced method of the notification service
 
+            // use the command pattern to decorate or adjust the order as Per order and show that with a print out
 
-            // use the command pattern to decorate or adjust the order as perer the wish of the customer and show that with a print out
-
-            // when the customization is done and order is ready using the notSifyOrderReady method of the notification service
+            // when the customization is done and order is ready using notifyOrderReady  method of the notification service
 
             // then print out a receipt of the order with the details of the order and the customer details
 
