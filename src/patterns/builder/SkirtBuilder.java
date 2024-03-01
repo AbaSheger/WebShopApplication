@@ -8,9 +8,10 @@ public class SkirtBuilder{
     //build price
 
     public SkirtBuilder setPrice(double price) {
-        skirts.setPrice(199.00);
+        skirts.setPrice(price);
         return this;
     }
+
 
     public SkirtBuilder setSize(String size) {
         skirts.setSize(size);

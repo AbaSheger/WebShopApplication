@@ -9,7 +9,7 @@ public class PantsBuilder {
 
     //build price
     public PantsBuilder setPrice(double price) {
-        pants.setPrice(599);
+        pants.setPrice(price);
         return this;
     }
 

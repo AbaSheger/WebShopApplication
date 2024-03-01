@@ -11,7 +11,7 @@ public class TShirtBuilder {
    //build price
 
     public TShirtBuilder setPrice(double price) {
-        tshirt.setPrice(90.00);
+        tshirt.setPrice(price);
         return this;
     }
 
