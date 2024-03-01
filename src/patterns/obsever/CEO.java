@@ -1,9 +1,12 @@
-package models;
 
-import patterns.observer.Observer;
-import patterns.observer.Subject;
+package patterns.obsever;
 
-public class CEO implements Observer {
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+
+
+public class CEO implements  PropertyChangeListener {
 
     private String name;
 
@@ -27,12 +30,17 @@ public class CEO implements Observer {
     }
 
     @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println("Notification for CEO " + name + ": " + evt.getNewValue());
+    }
+
+  /*  @Override
     public void update(String eventMessage) {
         displayNotification(eventMessage);
     }
 
     private void displayNotification(String message) {
         System.out.println("Notification for CEO " + name + ": " + message);
-    }
+    } */
 
 }

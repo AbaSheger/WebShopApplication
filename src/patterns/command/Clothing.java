@@ -3,6 +3,8 @@ package patterns.command;
 import models.Pants;
 import models.Skirt;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +17,18 @@ public class Clothing {
     private List<String> adjustments = new ArrayList<>();
     private String length;
 
+    private String fit; // For Pants
+    private String neckType; // For TShirt
+    private String sleeveLength; // For TShirt
+    private String waistline; // For Skirt
+    private String pattern; // For Skirt
+    private final PropertyChangeSupport support;
+
 
     // Constructor
     public Clothing(String type) {
         this.type = type;
+        this.support = new PropertyChangeSupport(this);
     }
 
     public String getType() {
@@ -74,6 +84,64 @@ public class Clothing {
             adjustments.add(adjustment);
         }
     }
+
+    public String getFit() {
+        return fit;
+    }
+
+    public void setFit(String fit) {
+        this.fit = fit;
+    }
+
+    public String getNeckType() {
+        return neckType;
+    }
+
+    public void setNeckType(String neckType) {
+        this.neckType = neckType;
+    }
+
+    public String getSleeveLength() {
+        return sleeveLength;
+    }
+
+    public void setSleeveLength(String sleeveLength) {
+        this.sleeveLength = sleeveLength;
+    }
+
+    public String getWaistline() {
+        return waistline;
+    }
+
+    public void setWaistline(String waistline) {
+        this.waistline = waistline;
+    }
+
+    public String getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+    }
+
+    public PropertyChangeSupport getSupport() {
+        return support;
+    }
+
+    //PropertyChangeListener support methods
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        support.removePropertyChangeListener(listener);
+    }
+
+    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+        support.firePropertyChange(propertyName, oldValue, newValue);
+    }
+
 
     @Override
     public String toString() {

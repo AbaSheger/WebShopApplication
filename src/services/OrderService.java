@@ -1,46 +1,27 @@
 package services;
 
-import java.util.HashMap;
-import java.util.Map;
+import patterns.obsever.Notification;
 
 public class OrderService {
     private static OrderService instance;
-    private NotificationService notificationService;
+    private Notification notification;
 
     // Assuming a simple way to track orders
-    private Map<String, OrderDetail> orders = new HashMap<>();
+    //private Map<String, OrderDetail> orders = new HashMap<>();
 
-    private OrderService(NotificationService notificationService) {
-        this.notificationService = notificationService;
+    private OrderService(Notification notification) {
+        this.notification = notification;
     }
 
-    public static OrderService getInstance(NotificationService notificationService) {
+    public static OrderService getInstance(Notification notification) {
         if (instance == null) {
             synchronized (OrderService.class) {
                 if (instance == null) {
-                    instance = new OrderService(notificationService);
+                    instance = new OrderService(notification);
                 }
             }
         }
         return instance;
-    }
-
-    public void placeOrder(OrderDetail orderDetail) {
-        // Simplified order placement logic
-        orders.put(orderDetail.getOrderId(), orderDetail);
-        notificationService.notifyNewOrderPlaced(); // Notify observers when a new order is placed
-        System.out.println("Order placed for: " + orderDetail.getItemType());
-    }
-
-    public void completeOrder(String orderId) {
-        OrderDetail order = orders.get(orderId);
-        if (order != null) {
-            order.setStatus("COMPLETED");
-            notificationService.notifyOrderReady(); // Notify observers when the order is ready
-            System.out.println("Order " + orderId + " is completed and ready.");
-        } else {
-            System.out.println("Order not found.");
-        }
     }
 
 }
