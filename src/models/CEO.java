@@ -1,5 +1,5 @@
 
-package patterns.obsever;
+package models;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -34,13 +34,6 @@ public class CEO implements  PropertyChangeListener {
         System.out.println("Notification for CEO " + name + ": " + evt.getNewValue());
     }
 
-  /*  @Override
-    public void update(String eventMessage) {
-        displayNotification(eventMessage);
-    }
 
-    private void displayNotification(String message) {
-        System.out.println("Notification for CEO " + name + ": " + message);
-    } */
 
 }

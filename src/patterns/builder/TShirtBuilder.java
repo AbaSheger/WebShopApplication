@@ -8,6 +8,14 @@ public class TShirtBuilder {
    private TShirt tshirt = new TShirt();
 
 
+   //build price
+
+    public TShirtBuilder setPrice(double price) {
+        tshirt.setPrice(90.00);
+        return this;
+    }
+
+
     public TShirtBuilder setSize(String size) {
         tshirt.setSize(size);
         return this;
@@ -24,25 +32,10 @@ public class TShirtBuilder {
         return this;
     }
 
-    public TShirtBuilder setSleeves(String sleeves) {
-        tshirt.setSleeves(sleeves);
-        return this;
-
-    }
-
-    public TShirtBuilder setNeckType(String neckType) {
-        tshirt.setNeckType(neckType);
-        return this;
-    }
 
     public TShirt build() {
         return tshirt;
     }
 
-    @Override
-    public String toString() {
-        return "TShirtBuilder{" +
-                "tshirt=" + tshirt +
-                '}';
-    }
+
 }

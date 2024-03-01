@@ -7,6 +7,12 @@ public class PantsBuilder {
     private Pants pants = new Pants();
 
 
+    //build price
+    public PantsBuilder setPrice(double price) {
+        pants.setPrice(599);
+        return this;
+    }
+
     public  PantsBuilder setSize (String size) {
         pants.setSize(size);
         return this;
@@ -24,27 +30,14 @@ public class PantsBuilder {
         return this;
     }
 
-    public PantsBuilder setLength(String length) {
-        pants.setLength(length);
-        return this;
-    }
-
-    public PantsBuilder setFit(String fit) {
-        pants.setFit(fit);
-        return this;
-    }
-
 
     public Pants build() {
+
+
 
 
         return pants;
     }
 
-    @Override
-    public String toString() {
-        return "PantsBuilder{" +
-                "pants=" + pants +
-                '}';
-    }
+
 }

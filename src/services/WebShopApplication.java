@@ -1,6 +1,7 @@
 package services;
 
 import models.*;
+import patterns.builder.CustomerBuilder;
 import patterns.builder.PantsBuilder;
 import patterns.builder.SkirtBuilder;
 import patterns.builder.TShirtBuilder;
@@ -13,7 +14,7 @@ public class WebShopApplication {
     private static Scanner scanner = new Scanner(System.in);
     private static OrderService orderService;
 
-  //  private static Clothing clothing;
+
 
     public static void main(String[] args) {
         initializeServices();
@@ -76,44 +77,58 @@ public class WebShopApplication {
 
         System.out.println("You have chosen to order " + itemType + ".");
 
-        // Collect common customization options
 
-         System.out.println("Enter your id number: ");
-         String id = scanner.nextLine();
+
 
         System.out.println("Enter your name: ");
         String name = scanner.nextLine();
 
-        System.out.println("Enter color preference (Red/Blue): ");
-        String color = scanner.nextLine();
+        Customer customer = new CustomerBuilder()  //build customer
+                .setName(name)
+                .build();
+
+        //collect common attributes to build the garment
+
+        System.out.println("Enter the Garment id number: ");
+        String id = scanner.nextLine();
 
         System.out.print("Enter size(Medium/Large) : ");
         String size = scanner.nextLine();
 
-        Clothing clothing = null;
+        System.out.println("Enter color preference (Red/Blue): ");
+        String color = scanner.nextLine();
+
+        //material
+        System.out.println("Enter material preference (Cotton/Polyester): ");
+        String material = scanner.nextLine();
+
+
         switch (itemType) {
             case "Pants":
+
+                Pants customPants = new PantsBuilder()
+                        .setSize(size)
+                        .setColor(color)
+                        .setMaterial(material)
+                        .build();
+
+                //inform the ceo that new order is placed using notifyNewOrderPlaced method of the notification service
+
+                notification.notifyNewOrderPlaced();
+
+                //take class exclusive atritbutes for pant Customization
+
                 System.out.println("Enter fit preference (Slim/Regular/Tapered): ");
                 String fit = scanner.nextLine();
 
                 System.out.println("Enter length preference (Short/Regular/Long): ");
                 String length = scanner.nextLine();
 
-                Pants customPants = new PantsBuilder()
-                        .setColor(color)
-                        .setSize(size)
-                        .setFit(fit)
-                        .setLength(length)
-                        .build();
+                // now use the command pattern  to customize using  fit and length inputs from the user
+                PantsTailoringCommand pantsTailoringCommand = new PantsTailoringCommand(customPants, fit, length);
+                invoker.addCommand(pantsTailoringCommand);
+                invoker.executeCommand();
 
-                clothing =  customPants;
-
-                //inform the ceo that new order is placed using notifyNewOrderPlaced method of the notification service
-
-
-
-
-                // use the command pattern to decorate or adjust the order as per the order  and show that with a print out
 
                  System.out.println("The customized pant is: " + "here the result from the command pattern should be printed out");
 
@@ -143,10 +158,9 @@ public class WebShopApplication {
                 String neckType = scanner.nextLine();
 
                 TShirt customTShirt = new TShirtBuilder()
-                        .setColor(color)
                         .setSize(size)
-                        .setSleeves(sleeves)
-                        .setNeckType(neckType)
+                        .setColor(color)
+                        .setMaterial(material)
                         .build();
 
                 notification.notifyOrderPlaced();
@@ -172,10 +186,9 @@ public class WebShopApplication {
                 String pattern = scanner.nextLine();
 
                 Skirt customSkirt = new SkirtBuilder()
-                        .setColor(color)
                         .setSize(size)
-                        .setWaistLine(waistline)
-                        .setPattern(pattern)
+                        .setColor(color)
+                        .setMaterial(material)
                         .build();
                 System.out.println("Custom Skirt ordered: " + customSkirt);
                 break;
