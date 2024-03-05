@@ -170,7 +170,6 @@ public class WebShopApplication {
         notification.notifyOrderReady();
 
 
-       // List<String> customizations = Arrays.asList("Fit: Slim", "Length: Long");
 
         List<String> customizations = Arrays.asList("Fit: " + fit, "Length: " + length);
         orderDetails.add(new OrderDetail("Pants", customPants.getId(), customPants.getPrice(), name, email, address, size, material, color, customizations));
