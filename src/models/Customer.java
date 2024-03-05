@@ -8,15 +8,10 @@ public class Customer {
     private String email;
 
 
-    //Empty constructor
 
 
     public Customer() {
     }
-
-
-    // gets and setters
-
 
     public String getId() {
         return id;

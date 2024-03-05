@@ -17,9 +17,9 @@ public class PantsTailoringCommand implements CustomizationCommand {
     public void execute() {
 
         System.out.println("Tailoring pants to fit: " + fit);
-        pants.setFit(fit); // Assuming Pants class has a setFit method
+        pants.setFit(fit);
         System.out.println("Cutting pants to length: " + length);
-        pants.setLength(length); // Assuming Pants class has a setLength method
+        pants.setLength(length);
 
     }
 }

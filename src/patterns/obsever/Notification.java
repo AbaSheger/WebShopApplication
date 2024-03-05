@@ -8,6 +8,7 @@ public class Notification {
 
     private PropertyChangeSupport support;
 
+
     public Notification() {
         support = new PropertyChangeSupport(this);
     }

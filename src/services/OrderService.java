@@ -6,22 +6,24 @@ public class OrderService {
     private static OrderService instance;
     private Notification notification;
 
-    // Assuming a simple way to track orders
-    //private Map<String, OrderDetail> orders = new HashMap<>();
-
-    private OrderService(Notification notification) {
-        this.notification = notification;
+    private OrderService() {
+        // Initialize the notification within the OrderService constructor
+        this.notification = new Notification();
     }
 
-    public static OrderService getInstance(Notification notification) {
+    public static OrderService getInstance() {
         if (instance == null) {
             synchronized (OrderService.class) {
                 if (instance == null) {
-                    instance = new OrderService(notification);
+                    instance = new OrderService();
                 }
             }
         }
         return instance;
+    }
+
+    public Notification getNotification() {
+        return notification;
     }
 
 }

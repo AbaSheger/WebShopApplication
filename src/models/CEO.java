@@ -10,28 +10,21 @@ public class CEO implements  PropertyChangeListener {
 
     private String name;
 
-    // Empty constructor
     public CEO() {
     }
 
-    // Constructor with name parameter for convenience
-    public CEO(String name) {
-        this.name = name;
-    }
-
-    // Setter for name
     public void setName(String name) {
         this.name = name;
     }
 
-    // Getter for name
+
     public String getName() {
         return name;
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("Notification for CEO " + name + ": " + evt.getNewValue());
+        System.out.println("🔔 Notification for CEO 🔔: " + evt.getNewValue());
     }
 
 

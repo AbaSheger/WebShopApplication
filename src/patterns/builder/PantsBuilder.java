@@ -7,32 +7,71 @@ public class PantsBuilder {
     private Pants pants = new Pants();
 
 
+
+
+    //build id
+    public PantsBuilder setId(String id) {
+        //check id validation throw execpetion
+        if (id == null || id.trim().isEmpty()) {
+            throw new RuntimeException("ID cannot be null or empty");
+        }
+
+        pants.setId(id);
+        return this;
+    }
+
     //build price
     public PantsBuilder setPrice(double price) {
+
+        //price is fixed  no validation needed
         pants.setPrice(price);
         return this;
     }
 
     public  PantsBuilder setSize (String size) {
-        pants.setSize(size);
+
+        String trimmedSize = size.trim();
+        if (!"Medium".equalsIgnoreCase(trimmedSize) && !"Large".equalsIgnoreCase(trimmedSize)) {
+            throw new RuntimeException("Size must be Medium or Large");
+        }
+        pants.setSize(trimmedSize);
         return this;
     }
 
 
     public PantsBuilder  setMaterial(String material) {
-        pants.setMaterial(material);
+
+        String trimmedMaterial = material.trim();
+        if (!"Cotton".equalsIgnoreCase(trimmedMaterial) && !"Polyester".equalsIgnoreCase(trimmedMaterial)) {
+            throw new RuntimeException("Material must be Cotton or Polyester");
+        }
+        pants.setMaterial(trimmedMaterial);
+
         return this;
     }
 
 
     public PantsBuilder setColor(String color) {
-        pants.setColor(color);
+
+        String trimmedColor = color.trim();
+        if (!"Red".equalsIgnoreCase(trimmedColor) && !"Blue".equalsIgnoreCase(trimmedColor)) {
+            throw new RuntimeException("Color must be Red or Blue");
+        }
+        pants.setColor(trimmedColor);
         return this;
     }
 
 
     public Pants build() {
 
+        boolean hasInvalidProperty = pants.getId() == null || pants.getId().trim().isEmpty() ||
+                pants.getSize() == null || pants.getSize().trim().isEmpty() ||
+                pants.getMaterial() == null || pants.getMaterial().trim().isEmpty() ||
+                pants.getColor() == null || pants.getColor().trim().isEmpty();
+
+        if (hasInvalidProperty) {
+            throw new RuntimeException("The pants information provided is incomplete or incorrect. Please ensure all required fields are filled out correctly.");
+        }
 
 
 
