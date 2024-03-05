@@ -37,6 +37,8 @@ public class WebShopApplication {
         System.out.print("Enter your email: ");
         String email = scanner.nextLine();
 
+
+
         boolean running = true;
         while (running) {
             displayMenuOptions();

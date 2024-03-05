@@ -9,9 +9,9 @@ public class PantsBuilder {
 
 
 
-    //build id
+
     public PantsBuilder setId(String id) {
-        //check id validation throw execpetion
+
         if (id == null || id.trim().isEmpty()) {
             throw new RuntimeException("ID cannot be null or empty");
         }
@@ -20,10 +20,10 @@ public class PantsBuilder {
         return this;
     }
 
-    //build price
+
     public PantsBuilder setPrice(double price) {
 
-        //price is fixed  no validation needed
+
         pants.setPrice(price);
         return this;
     }
