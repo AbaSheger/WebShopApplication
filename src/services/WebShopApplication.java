@@ -29,33 +29,48 @@ public class WebShopApplication {
 
         displayWelcomeMessage();
 
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter your address: ");
+        String address = scanner.nextLine();
+
+        System.out.print("Enter your email: ");
+        String email = scanner.nextLine();
+
         boolean running = true;
         while (running) {
             displayMenuOptions();
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            try {
+                int choice = scanner.nextInt();
+                scanner.nextLine();
 
-            switch (choice) {
-                case 1:
-                case 2:
-                case 3:
-                    prepareOrderProcess(choice);
-                    break;
-                case 4:
-                    finalizeOrders();
-                    running = false;
-                    System.out.println("Finalizing your orders. Thank you for visiting!");
-                    break;
-                case 5:
-                    running = false;
-                    System.out.println("Exiting WebShop. Thank you for visiting!");
-                    break;
-                default:
-                    System.out.println("Invalid option, please try again.");
+                switch (choice) {
+                    case 1:
+                    case 2:
+                    case 3:
+                        prepareOrderProcess(choice, name, email, address);
+                        break;
+                    case 4:
+                        finalizeOrders();
+                        running = false;
+                        System.out.println("Finalizing your orders. Thank you for visiting!");
+                        break;
+                    case 5:
+                        running = false;
+                        System.out.println("Exiting WebShop. Thank you for visiting!");
+                        break;
+                    default:
+                        System.out.println("Invalid option, please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter a valid option.");
+                scanner.next();
             }
         }
-
         scanner.close();
+
+
     }
 
     private static void displayWelcomeMessage() {
@@ -71,11 +86,13 @@ public class WebShopApplication {
         System.out.println("5. Exit without ordering");
         System.out.print("Your choice: ");
     }
-    private static void prepareOrderProcess(int choice) {
+
+    private static void prepareOrderProcess(int choice, String name, String email, String address) {
         String itemType = choice == 1 ? "Pants" : choice == 2 ? "TShirt" : "Skirt";
-        orderProcesses.add(() -> handleOrderProcess(itemType));
+        orderProcesses.add(() -> handleOrderProcess(itemType, name, email, address));
         System.out.println(itemType + " will be customized next. Continue shopping or finalize your order when ready.");
     }
+
 
    private static void finalizeOrders() {
         if (orderProcesses.isEmpty()) {
@@ -87,54 +104,7 @@ public class WebShopApplication {
        orderProcesses.clear();
        orderDetails.clear();
     }
-/*
-    private static void handleOrderProcess(String itemType) {
 
-        CustomizationInvoker invoker = new CustomizationInvoker();
-        System.out.println("\nLet's customize your " + itemType + ".");
-
-        System.out.print("Enter your name: ");
-        String name = scanner.nextLine();
-
-        System.out.print("Enter your address: ");
-        String address = scanner.nextLine();
-
-        System.out.print("Enter your email: ");
-        String email = scanner.nextLine();
-
-
-        Customer customer = new CustomerBuilder()
-                .setEmail(email)
-                .setAddress(address)
-                .setName(name)
-                .build();
-
-
-        System.out.print("Enter the Garment id number: ");
-        String id = scanner.nextLine();
-
-        System.out.print("Enter size (Medium/Large): ");
-        String size = scanner.nextLine();
-
-        System.out.print("Enter color preference (Red/Blue): ");
-        String color = scanner.nextLine();
-
-        System.out.print("Enter material preference (Cotton/Polyester): ");
-        String material = scanner.nextLine();
-
-        // Handling specific item type orders
-        switch (itemType) {
-            case "Pants":
-                processPantsOrder(id,size, color, material, invoker, customer);
-                break;
-            case "TShirt":
-                processTShirtOrder(id,size, color, material, invoker, customer);
-                break;
-            case "Skirt":
-                processSkirtOrder(id, size, color, material, invoker, customer);
-                break;
-        }
-    }*/
 
     private static void handleOrderProcess(String itemType, String name, String email, String address) {
         CustomizationInvoker invoker = new CustomizationInvoker();
@@ -152,7 +122,7 @@ public class WebShopApplication {
         System.out.print("Enter material preference (Cotton/Polyester): ");
         String material = scanner.nextLine();
 
-        // Directly pass customer information to processing methods
+
         switch (itemType) {
             case "Pants":
                 processPantsOrder(id, size, color, material, invoker, name, email, address);
@@ -169,7 +139,7 @@ public class WebShopApplication {
 
 
 
-    private static void processPantsOrder(String id, String size, String color, String material, CustomizationInvoker invoker, Customer customer) {
+    private static void processPantsOrder(String id, String size, String color, String material, CustomizationInvoker invoker, String name, String email, String address) {
 
         Notification notification = orderService.getNotification();
 
@@ -200,13 +170,14 @@ public class WebShopApplication {
 
         notification.notifyOrderReady();
 
-        List<String> customizations = Arrays.asList("Fit: " + fit, "Length: " + length);
-        orderDetails.add(new OrderDetail("Pants", customPants.getId(), customPants.getPrice(), customer.getName(), customer.getEmail(), customer.getAddress(), size, material, color, customizations));
+
+        List<String> customizations = Arrays.asList("Fit: Slim", "Length: Long"); // Example
+        orderDetails.add(new OrderDetail("Pants", customPants.getId(), customPants.getPrice(), name, email, address, size, material, color, customizations));
 
 
     }
 
-    private static void processTShirtOrder(String id, String size, String color, String material, CustomizationInvoker invoker, Customer customer) {
+    private static void processTShirtOrder(String id, String size, String color, String material, CustomizationInvoker invoker, String name, String email, String address) {
         Notification notification = orderService.getNotification();
 
         TShirt customTShirt = new TShirtBuilder()
@@ -235,10 +206,12 @@ public class WebShopApplication {
         notification.notifyOrderReady();
 
         List<String> customizations = Arrays.asList("Neck Type: " + neckType, "Sleeves: " + sleeves);
-        orderDetails.add(new OrderDetail("TShirt", customTShirt.getId(), customTShirt.getPrice(), customer.getName(), customer.getEmail(),customer.getAddress(), size, material,color, customizations));
+        orderDetails.add(new OrderDetail("TShirt", customTShirt.getId(), customTShirt.getPrice(), name, email, address, size, material, color, customizations));
+
+
     }
 
-    private static void processSkirtOrder(String id, String size, String color, String material, CustomizationInvoker invoker, Customer customer) {
+    private static void processSkirtOrder(String id, String size, String color, String material, CustomizationInvoker invoker, String name, String email, String address) {
 
         Notification notification = orderService.getNotification();
 
@@ -268,8 +241,10 @@ public class WebShopApplication {
 
         notification.notifyOrderReady();
 
-        List<String> customizations = Arrays.asList("Waistline: " + waistline, "Pattern: " + pattern);
-        orderDetails.add(new OrderDetail("Skirt", customSkirt.getId(), customSkirt.getPrice(), customer.getName(), customer.getEmail(),customer.getAddress(), size, material, color, customizations));
+       List<String> customizations = Arrays.asList("Waistline: " + waistline, "Pattern: " + pattern);
+        orderDetails.add(new OrderDetail("Skirt", customSkirt.getId(), customSkirt.getPrice(), name, email, address, size, material, color, customizations));
+
+
 
     }
 
