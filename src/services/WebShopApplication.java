@@ -1,7 +1,6 @@
 package services;
 
 import models.*;
-import patterns.builder.CustomerBuilder;
 import patterns.builder.PantsBuilder;
 import patterns.builder.SkirtBuilder;
 import patterns.builder.TShirtBuilder;
@@ -107,7 +106,7 @@ public class WebShopApplication {
 
 
     private static void handleOrderProcess(String itemType, String name, String email, String address) {
-        CustomizationInvoker invoker = new CustomizationInvoker();
+        GarmentCustomizationHandler invoker = new GarmentCustomizationHandler();
         System.out.println("\nLet's customize your " + itemType + ".");
 
         System.out.print("Enter the Garment id number: ");
@@ -137,9 +136,7 @@ public class WebShopApplication {
     }
 
 
-
-
-    private static void processPantsOrder(String id, String size, String color, String material, CustomizationInvoker invoker, String name, String email, String address) {
+    private static void processPantsOrder(String id, String size, String color, String material, GarmentCustomizationHandler invoker, String name, String email, String address) {
 
         Notification notification = orderService.getNotification();
 
@@ -171,13 +168,15 @@ public class WebShopApplication {
         notification.notifyOrderReady();
 
 
-        List<String> customizations = Arrays.asList("Fit: Slim", "Length: Long"); // Example
+       // List<String> customizations = Arrays.asList("Fit: Slim", "Length: Long");
+
+        List<String> customizations = Arrays.asList("Fit: " + fit, "Length: " + length);
         orderDetails.add(new OrderDetail("Pants", customPants.getId(), customPants.getPrice(), name, email, address, size, material, color, customizations));
 
 
     }
 
-    private static void processTShirtOrder(String id, String size, String color, String material, CustomizationInvoker invoker, String name, String email, String address) {
+    private static void processTShirtOrder(String id, String size, String color, String material, GarmentCustomizationHandler invoker, String name, String email, String address) {
         Notification notification = orderService.getNotification();
 
         TShirt customTShirt = new TShirtBuilder()
@@ -211,7 +210,7 @@ public class WebShopApplication {
 
     }
 
-    private static void processSkirtOrder(String id, String size, String color, String material, CustomizationInvoker invoker, String name, String email, String address) {
+    private static void processSkirtOrder(String id, String size, String color, String material, GarmentCustomizationHandler invoker, String name, String email, String address) {
 
         Notification notification = orderService.getNotification();
 
@@ -253,7 +252,7 @@ public class WebShopApplication {
         double subtotal = 0.0;
 
         System.out.println("\n==================================================");
-        System.out.println("                   Consolidated Receipt");
+        System.out.println("                   Receipt");
         System.out.println("==================================================");
         System.out.println("Order ID: " + orderId);
 

@@ -3,7 +3,7 @@ package patterns.command;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomizationInvoker {
+public class GarmentCustomizationHandler {
 
     private List<CustomizationCommand> commands = new ArrayList<>();
 
