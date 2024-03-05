@@ -17,10 +17,10 @@ public class WebShopApplication {
     private static List<OrderDetail> orderDetails = new ArrayList<>();
     private static List<Runnable> orderProcesses = new ArrayList<>();
 
-    private static CEO ceo; // CEO instance declared statically
+    private static CEO ceo;
 
     static {
-        // Instantiate CEO and attach it to the Notification object here, ensuring it's done only once.
+
         ceo = new CEO();
         orderService.getNotification().addPropertyChangeListener(ceo);
     }
@@ -33,7 +33,7 @@ public class WebShopApplication {
         while (running) {
             displayMenuOptions();
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline left after nextInt()
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -82,32 +82,12 @@ public class WebShopApplication {
             System.out.println("No orders to process.");
             return;
         }
-       orderProcesses.forEach(Runnable::run); // This should now populate orderDetails
+       orderProcesses.forEach(Runnable::run);
        printConsolidatedReceipt();
-       orderProcesses.clear(); // Clear the orders after processing
-       orderDetails.clear(); // Clear order details after printing the receipt
+       orderProcesses.clear();
+       orderDetails.clear();
     }
-
-   /* private static void finalizeOrders() {
-        if (orderProcesses.isEmpty()) {
-            System.out.println("No orders to process.");
-            return;
-        }
-
-        // Notify "order placed" at the start of order finalization
-        Notification notification = orderService.getNotification();
-        notification.notifyOrderPlaced();
-
-        orderProcesses.forEach(Runnable::run);
-
-        // Notify "order ready" after all orders have been processed
-        notification.notifyOrderReady();
-
-        orderProcesses.clear(); // Clear the orders after processing
-    } */
-
-
-
+/*
     private static void handleOrderProcess(String itemType) {
 
         CustomizationInvoker invoker = new CustomizationInvoker();
@@ -116,16 +96,16 @@ public class WebShopApplication {
         System.out.print("Enter your name: ");
         String name = scanner.nextLine();
 
-       /* System.out.println("Enter your address: ");
+        System.out.print("Enter your address: ");
         String address = scanner.nextLine();
 
-        System.out.println("Enter your email: ");
-        String email = scanner.nextLine();*/
+        System.out.print("Enter your email: ");
+        String email = scanner.nextLine();
 
 
         Customer customer = new CustomerBuilder()
-                //.setEmail(email)
-                //.setAddress(address)
+                .setEmail(email)
+                .setAddress(address)
                 .setName(name)
                 .build();
 
@@ -154,14 +134,47 @@ public class WebShopApplication {
                 processSkirtOrder(id, size, color, material, invoker, customer);
                 break;
         }
+    }*/
+
+    private static void handleOrderProcess(String itemType, String name, String email, String address) {
+        CustomizationInvoker invoker = new CustomizationInvoker();
+        System.out.println("\nLet's customize your " + itemType + ".");
+
+        System.out.print("Enter the Garment id number: ");
+        String id = scanner.nextLine();
+
+        System.out.print("Enter size (Medium/Large): ");
+        String size = scanner.nextLine();
+
+        System.out.print("Enter color preference (Red/Blue): ");
+        String color = scanner.nextLine();
+
+        System.out.print("Enter material preference (Cotton/Polyester): ");
+        String material = scanner.nextLine();
+
+        // Directly pass customer information to processing methods
+        switch (itemType) {
+            case "Pants":
+                processPantsOrder(id, size, color, material, invoker, name, email, address);
+                break;
+            case "TShirt":
+                processTShirtOrder(id, size, color, material, invoker, name, email, address);
+                break;
+            case "Skirt":
+                processSkirtOrder(id, size, color, material, invoker, name, email, address);
+                break;
+        }
     }
+
+
+
 
     private static void processPantsOrder(String id, String size, String color, String material, CustomizationInvoker invoker, Customer customer) {
 
         Notification notification = orderService.getNotification();
 
         Pants customPants = new PantsBuilder()
-                .setId(id) //set id is not working
+                .setId(id)
                 .setSize(size)
                 .setColor(color)
                 .setMaterial(material)
@@ -188,7 +201,8 @@ public class WebShopApplication {
         notification.notifyOrderReady();
 
         List<String> customizations = Arrays.asList("Fit: " + fit, "Length: " + length);
-        orderDetails.add(new OrderDetail("Pants", customPants.getId(), customPants.getPrice(), customer.getName(), customizations));
+        orderDetails.add(new OrderDetail("Pants", customPants.getId(), customPants.getPrice(), customer.getName(), customer.getEmail(), customer.getAddress(), size, material, color, customizations));
+
 
     }
 
@@ -196,7 +210,7 @@ public class WebShopApplication {
         Notification notification = orderService.getNotification();
 
         TShirt customTShirt = new TShirtBuilder()
-                .setId(id) //set id is not working
+                .setId(id)
                 .setSize(size)
                 .setColor(color)
                 .setMaterial(material)
@@ -221,7 +235,7 @@ public class WebShopApplication {
         notification.notifyOrderReady();
 
         List<String> customizations = Arrays.asList("Neck Type: " + neckType, "Sleeves: " + sleeves);
-        orderDetails.add(new OrderDetail("TShirt", customTShirt.getId(), customTShirt.getPrice(), customer.getName(), customizations));
+        orderDetails.add(new OrderDetail("TShirt", customTShirt.getId(), customTShirt.getPrice(), customer.getName(), customer.getEmail(),customer.getAddress(), size, material,color, customizations));
     }
 
     private static void processSkirtOrder(String id, String size, String color, String material, CustomizationInvoker invoker, Customer customer) {
@@ -229,7 +243,7 @@ public class WebShopApplication {
         Notification notification = orderService.getNotification();
 
         Skirt customSkirt = new SkirtBuilder()
-                .setId(id) //set id is not working
+                .setId(id)
                 .setSize(size)
                 .setColor(color)
                 .setMaterial(material)
@@ -255,7 +269,7 @@ public class WebShopApplication {
         notification.notifyOrderReady();
 
         List<String> customizations = Arrays.asList("Waistline: " + waistline, "Pattern: " + pattern);
-        orderDetails.add(new OrderDetail("Skirt", customSkirt.getId(), customSkirt.getPrice(), customer.getName(), customizations));
+        orderDetails.add(new OrderDetail("Skirt", customSkirt.getId(), customSkirt.getPrice(), customer.getName(), customer.getEmail(),customer.getAddress(), size, material, color, customizations));
 
     }
 
@@ -263,23 +277,40 @@ public class WebShopApplication {
         String orderId = UUID.randomUUID().toString();
         double subtotal = 0.0;
 
-        System.out.println("\nConsolidated Receipt:");
+        System.out.println("\n==================================================");
+        System.out.println("                   Consolidated Receipt");
+        System.out.println("==================================================");
         System.out.println("Order ID: " + orderId);
 
-
-        for (OrderDetail detail : orderDetails) {
-            System.out.println("Item Type: " + detail.itemType);
-            System.out.println("Item ID: " + detail.itemId);
-            System.out.println("Price: $" + detail.price);
-            subtotal+=detail.price;
-            System.out.println("Customer Name: " + detail.customerName);
-            for (String customization : detail.customizations) {
-                System.out.println("Customization: " + customization);
-            }
-            System.out.println("---------------------------");
+        if (!orderDetails.isEmpty()) {
+            System.out.println("Customer Name: " + orderDetails.get(0).customerName);
+            System.out.println("Email Address: " + orderDetails.get(0).email);
+            System.out.println("Shipping Address: " + orderDetails.get(0).address);
+            System.out.println("==================================================");
         }
 
-        System.out.println("Subtotal: $" + subtotal); // Print subtotal
+        for (OrderDetail detail : orderDetails) {
+            System.out.println("--------------------------------------------------");
+            System.out.println("Item Type: " + detail.itemType);
+            System.out.println("Item ID: " + detail.itemId);
+            System.out.println("Size: " + detail.size);
+            System.out.println("Material: " + detail.material);
+            System.out.println("Color: " + detail.color);
+            System.out.println("Customizations:");
+            for (String customization : detail.customizations) {
+                System.out.println("* " + customization);
+            }
+            System.out.println("Price: $" + String.format("%.2f", detail.price));
+            subtotal += detail.price;
+            System.out.println("--------------------------------------------------");
+        }
+
+        System.out.println("Subtotal: $" + String.format("%.2f", subtotal));
+        System.out.println("==================================================");
         System.out.println("Thank you for shopping with us!");
+        System.out.println("==================================================\n");
     }
+
+
+
 }

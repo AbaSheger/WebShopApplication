@@ -53,13 +53,13 @@ public class CustomerBuilder {
 
     public Customer build() {
 
-       /* boolean hasInvalidProperty = customer.getName() == null || customer.getName().trim().isEmpty() ||
+        boolean hasInvalidProperty = customer.getName() == null || customer.getName().trim().isEmpty() ||
                 customer.getAddress() == null || customer.getAddress().trim().isEmpty() ||
                 customer.getEmail() == null || customer.getEmail().trim().isEmpty();
 
         if (hasInvalidProperty) {
             throw new RuntimeException("Please make sure all required information (name, address, email) is filled out correctly.");
-        } */
+        }
 
         return customer;
     }
