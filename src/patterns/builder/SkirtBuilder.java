@@ -7,8 +7,8 @@ public class SkirtBuilder{
 
     public SkirtBuilder setId(String id) {
 
-        if (id == null || id.trim().isEmpty()) {
-            throw new IllegalArgumentException("ID cannot be null or empty");
+        if (id == null || !id.matches("^\\d{4}$")) {
+            throw new RuntimeException("ID must be a four-digit number.");
         }
 
         skirts.setId(id);

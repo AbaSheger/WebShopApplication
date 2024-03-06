@@ -29,13 +29,13 @@ public class WebShopApplication {
 
         displayWelcomeMessage();
 
-        System.out.print("Enter your name: ");
+        System.out.print("Enter your name (only letters and spaces allowed, e.g., John Doe): ");
         String name = scanner.nextLine();
 
-        System.out.print("Enter your address: ");
+        System.out.print("Enter your address (must be at least 10 characters long, e.g., Storgatan 1, 123 45 Stockholm): ");
         String address = scanner.nextLine();
 
-        System.out.print("Enter your email: ");
+        System.out.print("Enter your email (valid format, e.g., user@example.com): ");
         String email = scanner.nextLine();
 
       Customer customer = new CustomerBuilder()
@@ -80,7 +80,15 @@ public class WebShopApplication {
     }
 
     private static void displayWelcomeMessage() {
-        System.out.println("Welcome to the Wigell WebShop!");
+        System.out.println("\n" +
+                "*************************************************\n" +
+                "*                                               *\n" +
+                "*      Welcome to the Wigell WebShop!           *\n" +
+                "*                                               *\n" +
+                "*************************************************\n" +
+                "* Find the perfect garment tailored just for you*\n" +
+                "*************************************************\n");
+        System.out.println("Our exclusive collection awaits your customization. Let's create something unique together!");
     }
 
     private static void displayMenuOptions() {
@@ -113,12 +121,12 @@ public class WebShopApplication {
 
 
     private static void handleOrderProcess(String itemType, Customer customer) {
-        GarmentCustomizationHandler invoker = new GarmentCustomizationHandler();
+        GarmentCustomizationHandler handler = new GarmentCustomizationHandler();
 
 
         System.out.println("\nLet's customize your " + itemType + ".");
 
-        System.out.print("Enter the Garment id number: ");
+        System.out.print("Enter a four-digit Garment ID number (e.g., 1234): ");
         String id = scanner.nextLine();
 
         System.out.print("Enter size (Medium/Large): ");
@@ -133,19 +141,19 @@ public class WebShopApplication {
 
         switch (itemType) {
             case "Pants":
-                processPantsOrder(id, size, color, material, invoker, customer);
+                processPantsOrder(id, size, color, material, handler, customer);
                 break;
             case "TShirt":
-                processTShirtOrder(id, size, color, material, invoker, customer);
+                processTShirtOrder(id, size, color, material, handler, customer);
                 break;
             case "Skirt":
-                processSkirtOrder(id, size, color, material, invoker, customer);
+                processSkirtOrder(id, size, color, material, handler, customer);
                 break;
         }
     }
 
 
-    private static void processPantsOrder(String id, String size, String color, String material, GarmentCustomizationHandler invoker, Customer customer) {
+    private static void processPantsOrder(String id, String size, String color, String material, GarmentCustomizationHandler handler, Customer customer) {
 
         Notification notification = orderService.getNotification();
 
@@ -169,8 +177,8 @@ public class WebShopApplication {
         notification.notifyOrderPlaced();
 
         PantsTailoringCommand pantsTailoringCommand = new PantsTailoringCommand(customPants, fit, length);
-        invoker.addCommand(pantsTailoringCommand);
-        invoker.executeCommands();
+        handler.addCommand(pantsTailoringCommand);
+        handler.executeCommands();
 
 
 
@@ -183,7 +191,7 @@ public class WebShopApplication {
 
     }
 
-    private static void processTShirtOrder(String id, String size, String color, String material, GarmentCustomizationHandler invoker, Customer customer) {
+    private static void processTShirtOrder(String id, String size, String color, String material, GarmentCustomizationHandler handler, Customer customer) {
         Notification notification = orderService.getNotification();
 
         TShirt customTShirt = new TShirtBuilder()
@@ -206,8 +214,8 @@ public class WebShopApplication {
         notification.notifyOrderPlaced();
 
         TShirtTailoringCommand tShirtTailoringCommand = new TShirtTailoringCommand(customTShirt, neckType, sleeves);
-        invoker.addCommand(tShirtTailoringCommand);
-        invoker.executeCommands();
+        handler.addCommand(tShirtTailoringCommand);
+        handler.executeCommands();
 
         notification.notifyOrderReady();
 
@@ -217,7 +225,7 @@ public class WebShopApplication {
 
     }
 
-    private static void processSkirtOrder(String id, String size, String color, String material, GarmentCustomizationHandler invoker, Customer customer) {
+    private static void processSkirtOrder(String id, String size, String color, String material, GarmentCustomizationHandler handler, Customer customer) {
 
         Notification notification = orderService.getNotification();
 
@@ -240,8 +248,8 @@ public class WebShopApplication {
         notification.notifyOrderPlaced();
 
         SkirtTailoringCommand skirtTailoringCommand = new SkirtTailoringCommand(customSkirt, waistline, pattern);
-        invoker.addCommand(skirtTailoringCommand);
-        invoker.executeCommands();
+        handler.addCommand(skirtTailoringCommand);
+        handler.executeCommands();
 
 
 

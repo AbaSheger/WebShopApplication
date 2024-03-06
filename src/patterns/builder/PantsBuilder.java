@@ -12,8 +12,8 @@ public class PantsBuilder {
 
     public PantsBuilder setId(String id) {
 
-        if (id == null || id.trim().isEmpty()) {
-            throw new RuntimeException("ID cannot be null or empty");
+        if (id == null || !id.matches("^\\d{4}$")) {
+            throw new RuntimeException("ID must be a four-digit number.");
         }
 
         pants.setId(id);
